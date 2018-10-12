@@ -1,0 +1,8 @@
+stm32f0xx_comp.c:142:6:COMP_DeInit	8	static
+stm32f0xx_comp.c:163:6:COMP_Init	24	static
+stm32f0xx_comp.c:201:6:COMP_StructInit	16	static
+stm32f0xx_comp.c:227:6:COMP_Cmd	16	static
+stm32f0xx_comp.c:255:6:COMP_SwitchCmd	16	static
+stm32f0xx_comp.c:292:10:COMP_GetOutputLevel	24	static
+stm32f0xx_comp.c:339:6:COMP_WindowCmd	16	static
+stm32f0xx_comp.c:384:6:COMP_LockConfig	16	static

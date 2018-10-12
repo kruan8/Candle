@@ -1,0 +1,10 @@
+stm32f0xx_crc.c:94:6:CRC_DeInit	8	static
+stm32f0xx_crc.c:111:6:CRC_ResetDR	8	static
+stm32f0xx_crc.c:127:6:CRC_ReverseInputDataSelect	24	static
+stm32f0xx_crc.c:153:6:CRC_ReverseOutputDataCmd	16	static
+stm32f0xx_crc.c:176:6:CRC_SetInitRegister	16	static
+stm32f0xx_crc.c:202:10:CRC_CalcCRC	16	static
+stm32f0xx_crc.c:215:10:CRC_CalcBlockCRC	24	static
+stm32f0xx_crc.c:231:10:CRC_GetCRC	8	static
+stm32f0xx_crc.c:257:6:CRC_SetIDRegister	16	static
+stm32f0xx_crc.c:267:9:CRC_GetIDRegister	8	static
