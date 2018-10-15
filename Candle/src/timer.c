@@ -64,6 +64,11 @@ void TimerUs_Init(void)
   // Enable clock for TIM
   TIMER_US_CLK_ENABLE;
   TimerUs_Start();
+
+#ifdef DEBUG
+  RCC->APB2ENR |= RCC_APB2ENR_DBGMCUEN;
+  DBGMCU->APB1FZ |= DBGMCU_APB1_FZ_DBG_TIM14_STOP | DBGMCU_APB1_FZ_DBG_RTC_STOP;
+#endif
 }
 
 void TimerUs_Start(void)
@@ -81,6 +86,7 @@ uint16_t TimerUs_GetMicroseconds(void)
 
 void TimerUs_Delay(uint16_t microseconds)
 {
+  TimerUs_Clear();
   uint16_t t = TimerUs_GetMicroseconds() + microseconds;
   while (TimerUs_GetMicroseconds() < t)
   {

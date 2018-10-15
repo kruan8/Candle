@@ -5,6 +5,6 @@ main.c:103:6:AD_Init	32	static
 main.c:126:6:Gpio_Init	16	static
 main.c:139:6:RTC_Init_	8	static
 main.c:172:6:StopMode	8	static
-main.c:192:6:RTC_WriteAccess	16	static
-main.c:213:10:GetTrueRandomNumber	16	static
-main.c:257:6:RTC_IRQHandler	8	static
+main.c:190:6:RTC_WriteAccess	16	static
+main.c:211:10:GetTrueRandomNumber	16	static
+main.c:255:6:RTC_IRQHandler	8	static

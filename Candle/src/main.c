@@ -47,8 +47,8 @@ int main(void)
 
   while(1)
   {
-    TimerUs_Delay(150);
-    // StopMode();
+//    TimerUs_Delay(150);
+     StopMode();
 
  		// PWM - nastavuje jas LED
     nPwmCtrl++;
@@ -180,8 +180,6 @@ void StopMode(void)
   RTC->ISR =~ RTC_ISR_INIT;
   RTC_WriteAccess(false);
 
-  EXTI->PR = 0xFFFFFFFF;
-
   APP_SYSTICK_ISR_OFF;
 
   PWR_EnterSTOPMode(PWR_Regulator_LowPower, PWR_STOPEntry_WFI);
@@ -256,9 +254,10 @@ uint32_t GetTrueRandomNumber()
 
 void RTC_IRQHandler(void)
 {
+  EXTI->PR = EXTI_PR_PR17;
   RTC_WriteAccess(true);
-  RTC->CR &= ~(RTC_CR_ALRAE | RTC_CR_ALRAIE);
+//  RTC->CR &= ~(RTC_CR_ALRAE | RTC_CR_ALRAIE);
   RTC->ISR = (uint32_t)((uint32_t)(~((RTC_ISR_ALRAF | RTC_ISR_INIT)& 0x0001FFFF) | (uint32_t)(RTC->ISR & RTC_ISR_INIT)));
-  RTC_WriteAccess(false);
-//  RTC->ISR |= RTC_ISR_ALRAF;
+//  RTC_WriteAccess(false);
+  RTC->ISR |= RTC_ISR_ALRAF;
 }
