@@ -28,6 +28,11 @@ void RTC_WriteAccess(bool bEnable);
 
 int main(void)
 {
+  // po resetu bezi HSI na 8MHz
+
+  // SYSCLK = 8MHz/DIV
+  RCC->CFGR |= (uint32_t)RCC_CFGR_HPRE_DIV16;
+
   // kontrola hodin
   RCC_ClocksTypeDef RCC_Clocks;
   RCC_GetClocksFreq(&RCC_Clocks); // Get system clocks
@@ -36,6 +41,9 @@ int main(void)
   Gpio_Init();
   AD_Init();
   RTC_Init_();
+
+  Timer_Delay_ms(3000);
+  PWR_EnterSleepMode(PWR_SLEEPEntry_WFE);
 
   uint8_t nPwmCtrl = 0;		// 4 bit-Counter
   uint8_t nFrameCtrl = 0;	// 5 bit-Counter
@@ -47,10 +55,10 @@ int main(void)
 
   while(1)
   {
-//    TimerUs_Delay(150);
-     StopMode();
+    TimerUs_Delay(150);
+//     StopMode();
 
- 		// PWM - nastavuje jas LED
+ 		// PWM led
     nPwmCtrl++;
  		nPwmCtrl &= 0xf;		// only 4 bit
  		if (nPwmCtrl <= nPwmValue)
