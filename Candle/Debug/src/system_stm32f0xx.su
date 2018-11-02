@@ -1,3 +1,0 @@
-system_stm32f0xx.c:159:6:SystemInit	8	static
-system_stm32f0xx.c:234:6:SystemCoreClockUpdate	24	static
-system_stm32f0xx.c:286:13:SetSysClock	16	static

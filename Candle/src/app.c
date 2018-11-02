@@ -88,6 +88,7 @@ void App_Exec(void)
 {
 
 #ifdef HW
+  // SLEPP mod, nez dobehne PWM cyklus
   while (1)
   {
     SleepMode();
@@ -116,38 +117,44 @@ void App_Exec(void)
     // FRAME
     if (nPwmCtrl == 0)
     {
-      g_nFrameCtrl++;
-      g_nFrameCtrl &= 0x1f;
-
-      // generate a new random number every 8 cycles. In reality this is most likely bit serial
-      if ((g_nFrameCtrl & 0x07) == 0)
-      {
-        g_nRand = GetTrueRandomNumber() & 0x1f;
-        if ((g_nRand & 0x0c) != 0)
-        {
-          g_nRandFlag = 1;
-        }
-        else
-        {
-          g_nRandFlag = 0; // only update if valid
-        }
-      }
-
-      // NEW FRAME
-      if (g_nFrameCtrl == 0)
-      {
-        // reload PWM
-        g_nPwmValue = g_nNextBright;
-
-        // force update at beginning of frame
-        g_nRandFlag = 1;
-      }
-
-      if (g_nRandFlag)
-      {
-        g_nNextBright = g_nRand > 15 ? 15 : g_nRand;
-      }
+      App_FrameControl();
     }
+  }
+
+}
+
+void App_FrameControl(void)
+{
+  g_nFrameCtrl++;
+  g_nFrameCtrl &= 0x1f;
+
+  // generate a new random number every 8 cycles. In reality this is most likely bit serial
+  if ((g_nFrameCtrl & 0x07) == 0)
+  {
+    g_nRand = GetTrueRandomNumber() & 0x1f;
+    if ((g_nRand & 0x0c) != 0)
+    {
+      g_nRandFlag = 1;
+    }
+    else
+    {
+      g_nRandFlag = 0; // only update if valid
+    }
+  }
+
+  // NEW FRAME
+  if (g_nFrameCtrl == 0)
+  {
+    // reload PWM
+    g_nPwmValue = g_nNextBright;
+
+    // force update at beginning of frame
+    g_nRandFlag = 1;
+  }
+
+  if (g_nRandFlag)
+  {
+    g_nNextBright = g_nRand > 15 ? 15 : g_nRand;
   }
 
 }
@@ -343,37 +350,7 @@ void TIM3_IRQHandler(void)
 
   TIM_PWM->SR &= ~TIM_SR_UIF;
 
-  g_nFrameCtrl++;
-  g_nFrameCtrl &= 0x1f;
-
-  // generate a new random number every 8 cycles. In reality this is most likely bit serial
-  if ((g_nFrameCtrl & 0x07) == 0)
-  {
-    g_nRand = GetTrueRandomNumber() & 0x1f;
-    if ((g_nRand & 0x0c) != 0)
-    {
-      g_nRandFlag = 1;
-    }
-    else
-    {
-      g_nRandFlag = 0; // only update if valid
-    }
-  }
-
-  // NEW FRAME
-  if (g_nFrameCtrl == 0)
-  {
-    // reload PWM
-    g_nPwmValue = g_nNextBright;
-
-    // force update at beginning of frame
-    g_nRandFlag = 1;
-  }
-
-  if (g_nRandFlag)
-  {
-    g_nNextBright = g_nRand > 15 ? 15 : g_nRand;
-  }
+  App_FrameControl();
 
   App_PwmSet(g_nPwmValue);
 }
