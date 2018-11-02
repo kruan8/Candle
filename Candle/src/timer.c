@@ -67,7 +67,6 @@ void TimerUs_Init(void)
   TimerUs_Start();
 
 #ifdef DEBUG
-  RCC->APB2ENR |= RCC_APB2ENR_DBGMCUEN;
   DBGMCU->APB1FZ |= DBGMCU_APB1_FZ_DBG_TIM14_STOP | DBGMCU_APB1_FZ_DBG_RTC_STOP;
 #endif
 }
