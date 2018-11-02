@@ -18,10 +18,13 @@ void App_PwmSet(uint16_t nValue);
 
 void AD_Init(void);
 void Gpio_Init(void);
-uint32_t GetTrueRandomNumber();
-void RTC_Init_();
-void StopMode(void);
-void RTC_WriteAccess(bool bEnable);
 
+void RTC_Init_();
+
+void SleepMode(void);
+void StopMode(void);
+
+void RTC_WriteAccess(bool bEnable);
+uint32_t GetTrueRandomNumber();
 
 #endif /* APP_H_ */

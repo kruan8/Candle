@@ -37,7 +37,7 @@ void App_Init(void)
   Timer_Init();
   Gpio_Init();
   AD_Init();
-  RTC_Init_();
+//  RTC_Init_();
 
 #ifdef HW
   App_PwmInit(8000000);
@@ -49,7 +49,7 @@ void App_PwmInit(uint32_t nBusClock_Hz)
   TIM_PWM_CLK_ENABLE;
 
   // nastavit 6kHz
-  TIM_PWM->PSC = nBusClock_Hz / PWM_STEPS / 6000;  // cca 6 kHz
+  TIM_PWM->PSC = nBusClock_Hz / 6000;  // cca 6 kHz
   TIM_PWM->ARR = PWM_STEPS;
 
   /* (3) Set CCRx = 4, , the signal will be high during 4 us */
@@ -88,7 +88,10 @@ void App_Exec(void)
 {
 
 #ifdef HW
-  while (1);
+  while (1)
+  {
+    SleepMode();
+  }
 #endif
 
   uint8_t nPwmCtrl = 0;   // 4 bit-Counter
@@ -232,6 +235,13 @@ void RTC_Init_()
   // povolit preruseni od RTC
   NVIC_SetPriority(RTC_IRQn, 0);    // Set priority
   NVIC_EnableIRQ(RTC_IRQn);         // Enable RTC_IRQn
+}
+
+void SleepMode(void)
+{
+  APP_SYSTICK_ISR_OFF;
+  PWR_EnterSleepMode(PWR_SLEEPEntry_WFI);
+  APP_SYSTICK_ISR_ON;
 }
 
 void StopMode(void)
