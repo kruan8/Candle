@@ -64,7 +64,7 @@ void App_PwmInit(uint32_t nBusClock_Hz)
   /* (8) Force update generation (UG = 1) */
   TIM_PWM->CCR4 = 0; /* (3)  PWM value */
   TIM_PWM->CCMR2 |= TIM_CCMR2_OC4M_2 | TIM_CCMR2_OC4M_1 | TIM_CCMR2_OC4PE; /* (4) */ // PWM mode1 + Preload register on TIMx_CCR4 enabled.
-//  TIM_PWM->CCER |= TIM_CCER_CC4E; /* (5) */
+  TIM_PWM->CCER |= TIM_CCER_CC4E; /* (5) */
   TIM_PWM->CR1 |= TIM_CR1_CEN;
   TIM_PWM->EGR |= TIM_EGR_UG; /* (8) */
 
