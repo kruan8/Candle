@@ -28,7 +28,7 @@ uint8_t g_nNextBright = 0;  // 4 bit-Register
 uint8_t g_nRand = 0;        // 5 bit Signal
 uint8_t g_nRandFlag = 0;    // 1 bit Signal
 
-void App_Init(void)
+void App_Init(uint32_t nHCLKFrequency)
 {
 #ifdef DEBUG
   RCC->APB2ENR |= RCC_APB2ENR_DBGMCUEN;
@@ -40,7 +40,7 @@ void App_Init(void)
 //  RTC_Init_();
 
 #ifdef HW
-  App_PwmInit(8000000);
+  App_PwmInit(nHCLKFrequency);
 #endif
 }
 
@@ -49,7 +49,7 @@ void App_PwmInit(uint32_t nBusClock_Hz)
   TIM_PWM_CLK_ENABLE;
 
   // nastavit 6kHz
-  TIM_PWM->PSC = nBusClock_Hz / 6000;  // cca 6 kHz
+  TIM_PWM->PSC = nBusClock_Hz / 5000;  // cca 6 kHz
   TIM_PWM->ARR = PWM_STEPS;
 
   /* (3) Set CCRx = 4, , the signal will be high during 4 us */
@@ -64,7 +64,7 @@ void App_PwmInit(uint32_t nBusClock_Hz)
   /* (8) Force update generation (UG = 1) */
   TIM_PWM->CCR4 = 0; /* (3)  PWM value */
   TIM_PWM->CCMR2 |= TIM_CCMR2_OC4M_2 | TIM_CCMR2_OC4M_1 | TIM_CCMR2_OC4PE; /* (4) */ // PWM mode1 + Preload register on TIMx_CCR4 enabled.
-  TIM_PWM->CCER |= TIM_CCER_CC4E; /* (5) */
+//  TIM_PWM->CCER |= TIM_CCER_CC4E; /* (5) */
   TIM_PWM->CR1 |= TIM_CR1_CEN;
   TIM_PWM->EGR |= TIM_EGR_UG; /* (8) */
 

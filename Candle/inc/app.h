@@ -11,7 +11,7 @@
 #include "stm32f0xx.h"
 #include "stdbool.h"
 
-void App_Init(void);
+void App_Init(uint32_t nFrequency);
 void App_Exec(void);
 void App_PwmInit(uint32_t nBusClock_Hz);
 void App_PwmSet(uint16_t nValue);
